@@ -18,7 +18,7 @@ using namespace sf;
 	bool debug_mode = false;
 
 //constants
-	const int WIDTH = 10, HEIGHT = 20;
+	const int WIDTH = 10, HEIGHT = 21;
 	const float screen_width = 40, screen_height = 22.5;
 	const int CELL_SIZE = 40;
 	const int block_width = 4, block_height = 4;
@@ -241,7 +241,7 @@ int main()
 	int next_piece, held_piece = -1, temp_piece = -1;
 	int held_color = -1;
 	int x_offset = 15;
-	int y_offset = 1;
+	int y_offset = 0;
 	long hi_score{};
 	long score = 0;
 	int lines = 0;
@@ -261,6 +261,7 @@ int main()
 	std::ifstream infile;
 	infile.open("hi_score.txt");
 	infile >> hi_score;
+	infile.close();
 
 //update all the on-screen items around the board
 	auto update_dashboard = [&]() {
@@ -354,7 +355,7 @@ int main()
 			next_piece = rand() % 7;
 		}
 		current_x = (WIDTH - block_width) / 2;
-		current_y = -3;
+		current_y = -2;
 		current_rotation = 0;
 		type = next_piece;
 		next_piece = rand() % 7;
@@ -416,7 +417,7 @@ int main()
 					window.draw(s);
 				}
 			//if a block is above the allowed area, end the game
-				if (play_area[-1][x])
+				if (play_area[0][x])
 				{
 					game_over = true;
 				}
@@ -696,7 +697,7 @@ int main()
 					}
 					current_rotation = 0;
 					current_x = (WIDTH - block_width) / 2;
-					current_y = -3;
+					current_y = -2;
 					switched = true;
 					create_block();
 				}
@@ -823,6 +824,7 @@ int main()
 				std::ofstream outfile;
 				outfile.open("hi_score.txt");
 				outfile << score;
+				outfile.close();
 			}
 			else
 			{
